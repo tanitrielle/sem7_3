@@ -11,7 +11,7 @@ MM-11-1
 
 Experiment for scientific work without any additional filtres
 
-* In load_function - function for loading image
+* In load_function - function for loading of image
 
 * In AddFunct - functions for testing Canny's parametres
 
