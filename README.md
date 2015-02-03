@@ -15,4 +15,4 @@ Experiment for scientific work without any additional filtres
 
 * In AddFunct - functions for testing Canny's parametres
 
-* in GeneratorN -  function for generationg names for output files
+* in GeneratorN -  function for generation names for output files
