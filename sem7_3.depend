@@ -1,0 +1,89 @@
+# depslib dependency file v1.0
+1423160194 source:/home/tatyana/codeblocksprojects/sem7_3/load_function.cpp
+	<opencv2/core/core.hpp>
+	<opencv2/imgproc/imgproc.hpp>
+	<opencv2/highgui/highgui.hpp>
+	<string>
+	<iostream>
+	<clocale>
+	<fstream>
+	<stdio.h>
+	"load_function.h"
+
+1423160217 /home/tatyana/codeblocksprojects/sem7_3/load_function.h
+	<opencv2/core/core.hpp>
+	<opencv2/imgproc/imgproc.hpp>
+	<opencv2/highgui/highgui.hpp>
+	<string>
+	<iostream>
+	<clocale>
+	<fstream>
+	<stdio.h>
+
+1422886535 source:/home/tatyana/codeblocksprojects/sem7_3/AddFunct.cpp
+	<opencv2/core/core.hpp>
+	<opencv2/imgproc/imgproc.hpp>
+	<opencv2/highgui/highgui.hpp>
+	<string>
+	<iostream>
+	<clocale>
+	<fstream>
+	<stdio.h>
+	"AddFunct.h"
+
+1415618933 /home/tatyana/codeblocksprojects/sem7_3/AddFunct.h
+
+1427389563 source:/home/tatyana/codeblocksprojects/sem7_3/GeneratorN.cpp
+	<opencv2/core/core.hpp>
+	<opencv2/imgproc/imgproc.hpp>
+	<opencv2/highgui/highgui.hpp>
+	<string>
+	<iostream>
+	<clocale>
+	<fstream>
+	<stdio.h>
+	"GeneratorN.h"
+
+1427389564 /home/tatyana/codeblocksprojects/sem7_3/GeneratorN.h
+	<string>
+	<iostream>
+	<clocale>
+	<fstream>
+	<stdio.h>
+
+1427389563 source:/home/tatyana/codeblocksprojects/sem7_3/main.cpp
+	<opencv2/core/core.hpp>
+	<opencv2/imgproc/imgproc.hpp>
+	<opencv2/highgui/highgui.hpp>
+	<string>
+	<iostream>
+	<clocale>
+	<fstream>
+	<stdio.h>
+	"load_function.h"
+	"AddFunct.h"
+	"GeneratorN.h"
+	"AddFunctMat.h"
+
+1423105500 source:/home/tatyana/codeblocksprojects/sem7_3/AddFunctMat.cpp
+	<opencv2/core/core.hpp>
+	<opencv2/imgproc/imgproc.hpp>
+	<opencv2/highgui/highgui.hpp>
+	<string>
+	<iostream>
+	<clocale>
+	<fstream>
+	<stdio.h>
+	"GeneratorN.h"
+
+1423105500 /home/tatyana/codeblocksprojects/sem7_3/AddFunctMat.h
+	<opencv2/core/core.hpp>
+	<opencv2/imgproc/imgproc.hpp>
+	<opencv2/highgui/highgui.hpp>
+	<string>
+	<iostream>
+	<clocale>
+	<fstream>
+	<stdio.h>
+	"GeneratorN.h"
+

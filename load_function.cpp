@@ -12,13 +12,11 @@
 using namespace cv;
 using namespace std;
 
-Mat load_image(char *dir_arg)
+Mat load_image(string dir_arg, string filename)
 {
     Mat img;
     while(true)
     {
-    string filename;
-    cin >> filename;
 
     string dir=dir_arg+filename;
     cout << dir << endl;

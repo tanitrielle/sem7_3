@@ -26,4 +26,17 @@ string MyToString(int numb)
     return oss.str();
 }
 
+char* generationForData(string dir, string filename)
+{
+    string ext= "data.txt";
+    string res = dir+filename+ext;
+    return (char*)res.c_str();
+}
+
+char* generationForDataF1(string dir, string filename)
+{
+    string ext= "f1data.txt";
+    string res = dir+filename+ext;
+    return (char*)res.c_str();
+}
 

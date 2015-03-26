@@ -14,7 +14,7 @@
 
 using namespace cv;
 
-Mat load_image(char* arg_dir);
+Mat load_image(string dir_arg, string filename);
 
 
 #endif // LOAD_FUNCTION_INCLUDED

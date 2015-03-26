@@ -34,6 +34,9 @@
 		</Linker>
 		<Unit filename="AddFunct.cpp" />
 		<Unit filename="AddFunct.h" />
+		<Unit filename="AddFunctMat" />
+		<Unit filename="AddFunctMat.cpp" />
+		<Unit filename="AddFunctMat.h" />
 		<Unit filename="GeneratorN.cpp" />
 		<Unit filename="GeneratorN.h" />
 		<Unit filename="lena.jpg" />

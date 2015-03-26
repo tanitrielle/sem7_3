@@ -11,6 +11,8 @@ using namespace std;
 
 string generationFor(string &dir, string filename, int compression_rate);
 
+char* generationForData(string dir, string filename);
+char* generationForDataF1(string dir, string filename);
 string MyToString(int numb);
 
 string C_toString(char *dir);

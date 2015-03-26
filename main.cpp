@@ -12,6 +12,7 @@
 #include "load_function.h"
 #include "AddFunct.h"
 #include "GeneratorN.h"
+#include "AddFunctMat.h"
 
 using namespace cv;
 using namespace std;
@@ -26,151 +27,138 @@ string savePath[8] = { "/home/tatyana/picturesfortest/resultsOfThirdExperiment1/
                             "/home/tatyana/picturesfortest/resultsOfThirdExperiment1/6/",
                             "/home/tatyana/picturesfortest/resultsOfThirdExperiment1/7/"};
 
-Mat MoveDiagonal(Mat img, int numberX, int numberY)
-{
-    int width = img.cols - numberX;
-    int hight = img.rows - numberY;
-    Rect roi = Rect(numberX,numberY,width,hight);
-    Mat img_roi = img(roi);
-    return img_roi;
-}
 
-int MetricNumber(Mat Original, Mat Compression)
-{
-    int number = 0;
-
-    for (int y = 0; y <Original.rows; ++y)
-    {
-
-
-        unsigned char *const scanLine2(Original.ptr<unsigned char>(y));
-        unsigned char *const scanLine3(Compression.ptr<unsigned char>(y));
-        for (int x = 0; x < Original.cols; ++x)
-            {
-            if (scanLine2[x] != scanLine3[x])
-                {
-                    number++;
-
-                }
-            }
-    }
-
-    return number;
-}
-
-int Normalizator(Mat original)
-{
-   int number = 0;
-
-    for (int y = 0; y <original.rows; ++y)
-    {
-        unsigned char *const scanLine(original.ptr<unsigned char>(y));
-
-        for (int x = 0; x < original.cols; ++x)
-            {
-            if (scanLine[x] == 255)
-                {
-                    number++;
-
-                }
-            }
-    }
-
-    return number;
-}
-
-Mat GreenToGray(Mat img)
-{
-    vector<Mat> parts;
-    split(img, parts);
-    return parts[1];//in parts[1] - green part
-}
-
-Mat oCanny(Mat img, int lT, int uT, int kS, string savingPath)
-{
-    Mat gray = GreenToGray(img);
-    Mat edges;
-    Canny(gray, edges, (double)lT, uT, kS);
-    imwrite(savingPath.c_str(), edges);
-    gray.release();
-    return edges;
-}
-
-Mat SavingCompressedImage(Mat original, int rate, string output_dir)
-{
-
-    vector<int> p;
-
-    p[0] = CV_IMWRITE_JPEG_QUALITY;
-    p[1] = rate;
-    p[2] = 0;
-
-
-    string savePathOriginalImage = generationFor(output_dir, "compression", rate);
-
-    imwrite(savePathOriginalImage.c_str(), original, p);
-
-    Mat compImg = imread(savePathOriginalImage.c_str(), CV_LOAD_IMAGE_COLOR);
-    return compImg;
-
-}
-
-void experimentCutCompress(Mat img, int lT, int uT, int kS)
+void experimentCutCompress(Mat img, int lT, int uT, int kS, string filename)
 {
     ofstream results;
-    results.open("data.txt");
+    string dir = "/home/tatyana/codeblocksprojects/sem7_3/res/";
+    char* fname = generationForData(dir, filename);
+    results.open(fname);
+    cout << fname << endl;
     results << lT << "\t " << uT << "\t " << kS << endl;
+
     string savePathForOriginalWithCanny = generationFor(savePath[0], "cannyoriginal", 0);
+
     Mat cannyO = oCanny(img, lT, uT, kS, savePathForOriginalWithCanny);
 
     for(int number = 1; number <8; ++number)
     {
         Mat currentCopy = MoveDiagonal(img, number, number);
+
         string savePathForOriginalWithCannyCopy = generationFor(savePath[0], "cannyoriginalcutted", number);
         Mat cannyCopy = oCanny(currentCopy, lT, uT, kS, savePathForOriginalWithCannyCopy);
+
         for(int rate = 0; rate < 101; ++rate)
         {
+
             Mat savedImg = SavingCompressedImage(currentCopy, rate, savePath[number]);
+
             string savePathCompressionWithCanny = generationFor(savePath[number], "cannycompression", rate);
             Mat cannyC = oCanny(savedImg, lT, uT, kS, savePathCompressionWithCanny);
+            //Mat savedFilteredImg;
+            //GaussianBlur( savedImg, savedFilteredImg, Size( 3, 3), 0, 0 );
+           // string savePathCompressionWithCannyF = generationFor(savePath[number], "cannycompressionf", rate);
+            //Mat cannyCF = oCanny(savedFilteredImg, lT, uT, kS, savePathCompressionWithCannyF);
             int difference = MetricNumber(cannyCopy, cannyC);
-            double normdiff = difference/Normalizator(cannyCopy);
-            results << rate << "\t" <<number <<"\t"<<normdiff<<endl;
+            //int diff2 = MetricNumber(cannyCopy, cannyCF);
+            int normdiff = Normalizator(cannyCopy);
+            results << rate << "\t" <<number <<"\t"<<normdiff<<"\t" <<difference<<endl;
             savedImg.release();
             cannyC.release();
+            //savedFilteredImg.release();
+            //cannyCF.release();
         }
         currentCopy.release();
         cannyCopy.release();
     }
+    cannyO.release();
+    results.close();
 }
 
+void experimentCutCompressFiltered(Mat img, int lT, int uT, int kS, string filename)
+{
+    cout << "In" << endl;
+    ofstream results;
+    string dir = "/home/tatyana/codeblocksprojects/sem7_3/res/";
+    char* fname = generationForDataF1(dir, filename);
+    results.open(fname);
+    cout << fname << endl;
+    results << lT << "\t " << uT << "\t " << kS << endl;
+
+
+    string savePathForOriginalWithCanny = generationFor(savePath[0], "cannyoriginal", 0);
+
+    Mat cannyO = oCanny(img, lT, uT, kS, savePathForOriginalWithCanny);
+    cout << "In3" << endl;
+
+    for(int number = 1; number <8; ++number)
+    {
+        Mat currentCopy = MoveDiagonal(img, number, number);
+        cout << "In4" << endl;
+        string savePathForOriginalWithCannyCopy = generationFor(savePath[0], "cannyoriginalcutted", number);
+        Mat cannyCopy = oCanny(currentCopy, lT, uT, kS, savePathForOriginalWithCannyCopy);
+
+        for(int rate = 0; rate < 101; ++rate)
+        {
+
+            Mat savedImg = SavingCompressedImage(currentCopy, rate, savePath[number]);
+            Mat savedFilteredImg;
+            GaussianBlur( savedImg, savedFilteredImg, Size( 3, 3), 0, 0 );
+            //blur(savedImg, savedFilteredImg, Size(3,3));
+            string savePathCompressionWithCanny = generationFor(savePath[number], "cannycompression", rate);
+            Mat cannyC = oCanny(savedFilteredImg, lT, uT, kS, savePathCompressionWithCanny);
+
+            int difference = MetricNumber(cannyCopy, cannyC);
+
+            int normdiff = Normalizator(cannyCopy);
+
+            results << rate << "\t" <<number <<"\t"<<normdiff<<"\t" <<difference<<endl;
+            savedImg.release();
+            cannyC.release();
+            savedFilteredImg.release();
+        }
+        currentCopy.release();
+        cannyCopy.release();
+    }
+    results.close();
+}
 
 int main(int argc, char *argv[])
 {
-    setlocale(LC_ALL, "Russian");
-    cout << "Enter filename" << endl;
-    img = load_image("/home/tatyana/picturesfortest/picturesfortests/fromphone/");
+    FILE *file;
+	struct mass {
+        int can;
+		char name[20];
 
-    cout<<"Введите нижнюю границу детектора Канни. Диапазон принимаемых значений от 0 до 255"<<endl;
-    int lowThreshold = low_threshold();
+	};
+	struct mass listok[10];
+	int j=0;
+    string names[10];
+	file = fopen("/home/tatyana/picturesfortest/t12/list.txt", "r");
 
-    cout << "Введите верхнюю границу детектора Канни. Диапазон принимаемых значений от 0 до 255."<<endl;
-    int upperThreshold = upper_threshold(lowThreshold);
+	while (fscanf (file, "%d    %s", &(listok[j].can), listok[j].name) != EOF) {
+		printf("%d %s\n", listok[j].can, listok[j].name);
+		names[j]=listok[j].name;
+		j++;
+	}
+	string dir="/home/tatyana/picturesfortest/t12/";
+    for(int i =0; i<10; ++i)
+    {
+        img = load_image(dir, names[i]);
+        int lowThreshold = listok[i].can;
+        int upperThreshold = 2*lowThreshold;
+        int kernelSize =3;
+        //imshow("original", img);
+        //Mat gray = GreenToGray(img);
+        //imshow("gray", gray);
+        experimentCutCompress(img, lowThreshold, upperThreshold, kernelSize, names[i]);
+        experimentCutCompressFiltered(img, lowThreshold, upperThreshold, kernelSize, names[i]);
+    }
 
-    cout << "Введите размер ядра детектора Канни. Принимает значения 3, 5, 7"<<endl;
-    int kernelSize = kernel_size();
-    imshow("original", img);
-    cout << img.channels() <<endl;
-    Mat gray = GreenToGray(img);
-    imshow("gray", gray);
-    Mat canny = oCanny(img, lowThreshold, upperThreshold, kernelSize, savePath[0]);
-    imshow("canny", canny);
-    int norma = Normalizator(canny);
-    cout<<norma<<endl;
-    experimentCutCompress(img, lowThreshold, upperThreshold, kernelSize);
+    cout << "Success" << endl;
     waitKey(0);
 
-     return 0;
+    return 0;
 
 }
 
