@@ -33,7 +33,7 @@
 
 1415618933 /home/tatyana/codeblocksprojects/sem7_3/AddFunct.h
 
-1427389563 source:/home/tatyana/codeblocksprojects/sem7_3/GeneratorN.cpp
+1427393231 source:/home/tatyana/codeblocksprojects/sem7_3/GeneratorN.cpp
 	<opencv2/core/core.hpp>
 	<opencv2/imgproc/imgproc.hpp>
 	<opencv2/highgui/highgui.hpp>
@@ -44,14 +44,14 @@
 	<stdio.h>
 	"GeneratorN.h"
 
-1427389564 /home/tatyana/codeblocksprojects/sem7_3/GeneratorN.h
+1427394535 /home/tatyana/codeblocksprojects/sem7_3/GeneratorN.h
 	<string>
 	<iostream>
 	<clocale>
 	<fstream>
 	<stdio.h>
 
-1427389563 source:/home/tatyana/codeblocksprojects/sem7_3/main.cpp
+1427394535 source:/home/tatyana/codeblocksprojects/sem7_3/main.cpp
 	<opencv2/core/core.hpp>
 	<opencv2/imgproc/imgproc.hpp>
 	<opencv2/highgui/highgui.hpp>

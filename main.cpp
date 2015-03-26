@@ -27,16 +27,25 @@ string savePath[8] = { "/home/tatyana/picturesfortest/resultsOfThirdExperiment1/
                             "/home/tatyana/picturesfortest/resultsOfThirdExperiment1/6/",
                             "/home/tatyana/picturesfortest/resultsOfThirdExperiment1/7/"};
 
+float averageForExperiment(Mat data, int rate)
+{
+    float res;
+    for(int number=1; number<8; ++number)
+    {
+        res+=data.at<float>(number, rate);
+    }
+    return res/7;
+}
 
 void experimentCutCompress(Mat img, int lT, int uT, int kS, string filename)
 {
     ofstream results;
     string dir = "/home/tatyana/codeblocksprojects/sem7_3/res/";
-    char* fname = generationForData(dir, filename);
+    const char* fname = generationForData(dir, filename);
     results.open(fname);
     cout << fname << endl;
     results << lT << "\t " << uT << "\t " << kS << endl;
-
+    Mat numbData(100, 8, CV_32FC1);
     string savePathForOriginalWithCanny = generationFor(savePath[0], "cannyoriginal", 0);
 
     Mat cannyO = oCanny(img, lT, uT, kS, savePathForOriginalWithCanny);
@@ -62,25 +71,31 @@ void experimentCutCompress(Mat img, int lT, int uT, int kS, string filename)
             int difference = MetricNumber(cannyCopy, cannyC);
             //int diff2 = MetricNumber(cannyCopy, cannyCF);
             int normdiff = Normalizator(cannyCopy);
+            numbData.at<float>(number, rate)=difference/normdiff;
             results << rate << "\t" <<number <<"\t"<<normdiff<<"\t" <<difference<<endl;
             savedImg.release();
             cannyC.release();
             //savedFilteredImg.release();
             //cannyCF.release();
         }
+
         currentCopy.release();
         cannyCopy.release();
     }
+    float avg = averageForExperiment(numbData,40);
+    cout << avg << endl;
     cannyO.release();
     results.close();
 }
+
+
 
 void experimentCutCompressFiltered(Mat img, int lT, int uT, int kS, string filename)
 {
     cout << "In" << endl;
     ofstream results;
     string dir = "/home/tatyana/codeblocksprojects/sem7_3/res/";
-    char* fname = generationForDataF1(dir, filename);
+    const char* fname = generationForDataF1(dir, filename);
     results.open(fname);
     cout << fname << endl;
     results << lT << "\t " << uT << "\t " << kS << endl;
@@ -89,12 +104,12 @@ void experimentCutCompressFiltered(Mat img, int lT, int uT, int kS, string filen
     string savePathForOriginalWithCanny = generationFor(savePath[0], "cannyoriginal", 0);
 
     Mat cannyO = oCanny(img, lT, uT, kS, savePathForOriginalWithCanny);
-    cout << "In3" << endl;
+
 
     for(int number = 1; number <8; ++number)
     {
         Mat currentCopy = MoveDiagonal(img, number, number);
-        cout << "In4" << endl;
+
         string savePathForOriginalWithCannyCopy = generationFor(savePath[0], "cannyoriginalcutted", number);
         Mat cannyCopy = oCanny(currentCopy, lT, uT, kS, savePathForOriginalWithCannyCopy);
 
